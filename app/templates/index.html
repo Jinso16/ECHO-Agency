@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHO | Home page</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="../static/images/logo-branca.webp">
+</head>
+<body>
+    <div class="cab">
+        <div class="cab_left">
+            <h1 class="site_name">ECHO</h1>
+
+            <div class="pesquisa">
+                <input class="txtBusca" type="text" id="txtBusca" placeholder="Buscar...">
+                <img class="btnBusca" src="../static/images/lupa.png" id="btnBusca" alt="buscar">
+            </div>
+        </div>
+
+        <div class="logo_div">
+            <img src="../static/images/logo.webp" alt="logo_echo" class="logo">
+        </div>
+
+        <div class="cab_right">
+            <img src="../static/images/compras.png" alt="carrinho_de_compras" class="carr_comp">
+        </div>
+    </div>
+    
+    <h2 class="header">your botanic eco agency.</h2>
+
+    <div class="divDescontos">
+
+        <button class="arrow_left control" alt="change_item_left"><img src="../static/images/arrow.png" alt="change_item_left"></button>
+        <button class="arrow_right control" alt="change_item_right"><img src="../static/images/arrow.png" alt="change_item_right"></button>
+
+        <div class="container">
+            <div class="gallery_wrapper">
+                <div class="gallery">
+                    {% for produto in produtos %}
+                    <div class="prod">
+                        <img class="img_prod" src="{{ produto.foto }}" alt="{{ produto.nome }}">
+                        <h2 class="prod-name">{{ produto.nome }}</h2>
+
+                        <h1 class="prod-price">R${{ produto.preco }}</h1>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <div class="container_sobre">
+        <div class="div_sobre">
+            <img class="img_sobre" src="../static/images/homem-segurando-planta.webp" alt="homem-segurando-planta">
+
+            <div class="info_sobre">
+                <h1 class="title_sobre">SOBRE A EMPRESA</h1>
+                <h2 class="txt_sobre">A ECHO é uma empresa voltada a venda de materiais 100% orgânicos e naturais. Nós visamos o bem-estar do planeta. Aqui você pode encontrar de tudo, desde plantas, vasos, bolsas, roupas e muito mais. Basta visitar nossa página de loja e ficar por dentro de tudo.</h2>
+            </div>    
+        </div>
+    </div>
+
+    <div class="div-site-info">
+        <div class="site-info">
+
+            <div class="section-info">
+                <img src="../static/images/card.png" alt="paymethod" class="img-site-info">
+                <h2 class="section-txt">Escolha como pagar: <br> Você tem a opção de pagar com cartão, boleto ou Pix.</h2>
+            </div>
+
+            <div class="section-info">
+                <img src="../static/images/box.png" alt="delivery" class="img-site-info">
+                <h2 class="section-txt">Frete grátis: <br> Ao se cadastrar, você tem frete grátis em compras acima de R$79.</h2>
+            </div>
+
+            <div class="section-info">
+                <img src="../static/images/seguranca.png" alt="seguranca" class="img-site-info">
+                <h2 class="section-txt">Segurança máxima: <br>Você não gostou do que comprou? Devolva! Você está sempre protegido.</h2>
+            </div>
+            
+            
+        </div>
+
+        <div class="low-site-info">
+            <h3 class="low-info-txt">Copyright © 2024 - ECHO Agency.</h3>
+
+            <div class="low-info-right">
+                <img src="../static/images/instagram.png" alt="instagram" class="logos">
+                <img src="../static/images/twitter.png" alt="twitter" class="logos">
+                <img src="../static/images/whatsapp.png" alt="whatsapp" class="logos">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const controls = document.querySelectorAll('.control')
+
+        let currentProd = 0
+
+        const prods = document.querySelectorAll('.prod')
+
+        const maxProds = prods.length
+
+        controls.forEach(control => {
+            control.addEventListener('click', () => {
+                const isLeft = control.classList.contains('arrow_left')
+                
+                if (isLeft) {
+                    if (currentProd < 1) 
+                    {
+                        currentProd = maxProds-1
+                    } else {
+                        currentProd -= 1
+                    }
+                    
+                } else {
+                    if (currentProd > maxProds-2)
+                    {
+                        currentProd = 0
+                    } else {
+                        currentProd += 1
+                    } 
+                }
+
+                prods.forEach(prod => prod.classList.remove("curr_prod"))
+                
+                prods[currentProd].scrollIntoView({
+                    inline: "center",
+                    behavior: "smooth",
+                    block: "nearest"
+                })
+
+                prods[currentProd].classList.add("curr_prod")
+
+                console.log(maxProds, currentProd)
+            })
+        })
+    </script>
+</body>
+</html>
